@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand */
+  --color-primary: #2f9e8f;
+  --color-primary-dark: #22806f;
+  --color-primary-light: #e4f3f0;
+
+  --color-secondary: #f2735c;
+  --color-secondary-dark: #dd5a42;
+  --color-secondary-light: #fce7e1;
+
+  /* Surfaces */
+  --color-cream: #fdf7ee;
+  --color-cream-dark: #f7eedb;
+  --color-card: #ffffff;
+
+  /* Text */
+  --color-charcoal: #33302b;
+  --color-muted: #7a7469;
+
+  /* Accents */
+  --color-gold: #f5a623;
+  --color-border: #eae2d6;
+
+  /* Pastel category backgrounds */
+  --color-pastel-yellow: #fdecc8;
+  --color-pastel-mint: #d9f0e6;
+  --color-pastel-pink: #fbe1e6;
+  --color-pastel-blue: #dceef7;
+  --color-pastel-peach: #fbe0cd;
+
+  --background: var(--color-cream);
+  --foreground: var(--color-charcoal);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-light: var(--color-primary-light);
+
+  --color-secondary: var(--color-secondary);
+  --color-secondary-dark: var(--color-secondary-dark);
+  --color-secondary-light: var(--color-secondary-light);
+
+  --color-cream: var(--color-cream);
+  --color-cream-dark: var(--color-cream-dark);
+  --color-card: var(--color-card);
+
+  --color-charcoal: var(--color-charcoal);
+  --color-muted: var(--color-muted);
+
+  --color-gold: var(--color-gold);
+  --color-border: var(--color-border);
+
+  --color-pastel-yellow: var(--color-pastel-yellow);
+  --color-pastel-mint: var(--color-pastel-mint);
+  --color-pastel-pink: var(--color-pastel-pink);
+  --color-pastel-blue: var(--color-pastel-blue);
+  --color-pastel-peach: var(--color-pastel-peach);
+
+  --font-heading: var(--font-baloo), ui-rounded, "Segoe UI", sans-serif;
+  --font-body: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+}
