@@ -16,7 +16,6 @@ export function MediaPlaceholder({
   tint = "mint",
   className = "",
   sizes,
-  fill = true,
 }: {
   src?: string;
   alt: string;
@@ -24,6 +23,7 @@ export function MediaPlaceholder({
   tint?: PastelBg;
   className?: string;
   sizes?: string;
+  /** @deprecated no longer used — the wrapper div is always sized via className and next/image always uses `fill`. */
   fill?: boolean;
 }) {
   if (src) {
@@ -32,7 +32,7 @@ export function MediaPlaceholder({
         <Image
           src={src}
           alt={alt}
-          fill={fill}
+          fill
           sizes={sizes ?? "(min-width: 1024px) 25vw, 50vw"}
           className="object-cover"
         />

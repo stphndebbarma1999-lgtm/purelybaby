@@ -18,14 +18,22 @@ const socialIcons: Record<string, typeof InstagramGlyph> = {
   YouTube: YoutubeGlyph,
 };
 
-export function Footer() {
+export function Footer({
+  logoUrl,
+  siteName,
+  siteDescription,
+}: {
+  logoUrl?: string;
+  siteName?: string;
+  siteDescription?: string;
+}) {
   return (
     <footer className="border-t border-border bg-cream-dark">
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.9fr_1.1fr_0.8fr_0.8fr_0.9fr]">
         <div className="sm:col-span-2 lg:col-span-1">
-          <Logo />
+          <Logo logoUrl={logoUrl} siteName={siteName} />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
-            {siteConfig.description}
+            {siteDescription || siteConfig.description}
           </p>
           <div className="mt-5 flex items-center gap-3">
             {socialLinks.map((social) => {
@@ -82,7 +90,7 @@ export function Footer() {
       <div className="border-t border-border">
         <Container className="flex flex-col items-center justify-between gap-3 py-5 text-xs text-muted sm:flex-row">
           <p>
-            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+            &copy; {new Date().getFullYear()} {siteName || siteConfig.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
             {paymentMethods.map((method) => (

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { newsletterConfig } from "@/config/homepage";
+import type { NewsletterContent } from "@/lib/data/content";
 
-export function Newsletter() {
+export function Newsletter({ content }: { content: NewsletterContent }) {
   const [submitted, setSubmitted] = useState(false);
 
   return (
@@ -15,10 +15,10 @@ export function Newsletter() {
 
       <Container className="relative text-center">
         <h2 className="font-[family-name:var(--font-heading)] text-2xl font-extrabold sm:text-3xl">
-          {newsletterConfig.heading}
+          {content.heading}
         </h2>
         <p className="mx-auto mt-3 max-w-md text-sm text-white/85">
-          {newsletterConfig.description}
+          {content.description}
         </p>
 
         <form
@@ -31,14 +31,14 @@ export function Newsletter() {
           <input
             type="email"
             required
-            placeholder={newsletterConfig.placeholder}
+            placeholder={content.placeholder}
             className="w-full rounded-full border-0 bg-white px-5 py-3 text-sm text-charcoal outline-none placeholder:text-muted"
           />
           <button
             type="submit"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-secondary-dark"
           >
-            {newsletterConfig.buttonLabel}
+            {content.buttonLabel}
             <Send size={14} />
           </button>
         </form>

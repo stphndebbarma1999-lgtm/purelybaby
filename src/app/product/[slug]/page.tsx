@@ -3,10 +3,11 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { ProductDetail } from "@/components/product/ProductDetail";
 import { ProductGrid } from "@/components/home/ProductGrid";
-import { allProducts, getProductBySlug, getRelatedProducts } from "@/config/products";
+import { getAllProducts, getProductBySlug, getRelatedProducts } from "@/lib/data/products";
 
-export function generateStaticParams() {
-  return allProducts.map((product) => ({ slug: product.slug }));
+export async function generateStaticParams() {
+  const products = await getAllProducts();
+  return products.map((product) => ({ slug: product.slug }));
 }
 
 export async function generateMetadata({
@@ -15,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   return { title: product ? product.title : "Product" };
 }
 
@@ -25,10 +26,10 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const related = getRelatedProducts(product);
+  const related = await getRelatedProducts(product);
 
   return (
     <Container className="py-10 lg:py-14">

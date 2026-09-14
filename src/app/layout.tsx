@@ -6,6 +6,8 @@ import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Providers } from "@/components/Providers";
+import { getCategories } from "@/lib/data/categories";
+import { getContentBlock } from "@/lib/data/content";
 
 const baloo = Baloo_2({
   variable: "--font-baloo",
@@ -25,7 +27,13 @@ export const metadata: Metadata = {
   description: siteConfig.description,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const [categories, site, announcementBar] = await Promise.all([
+    getCategories(),
+    getContentBlock("site"),
+    getContentBlock("announcement_bar"),
+  ]);
+
   return (
     <html
       lang="en"
@@ -33,10 +41,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col">
         <Providers>
-          <AnnouncementBar />
-          <Header />
+          <AnnouncementBar enabled={announcementBar.enabled} message={announcementBar.message} />
+          <Header categories={categories} logoUrl={site.logoUrl} siteName={site.name} />
           <main className="flex-1">{children}</main>
-          <Footer />
+          <Footer
+            logoUrl={site.logoUrl}
+            siteName={site.name}
+            siteDescription={site.description}
+          />
         </Providers>
       </body>
     </html>

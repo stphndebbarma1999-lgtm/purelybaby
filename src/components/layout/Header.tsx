@@ -2,15 +2,24 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, Menu, Search, ShoppingCart, User, X } from "lucide-react";
+import { ChevronDown, ImageIcon, Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { mainNav } from "@/config/site";
-import { categories } from "@/config/homepage";
 import { pastelBgClass } from "@/lib/pastel";
+import { categoryIcons } from "@/lib/category-icons";
 import { useCart } from "@/context/CartContext";
+import type { Category } from "@/types";
 
-export function Header() {
+export function Header({
+  categories,
+  logoUrl,
+  siteName,
+}: {
+  categories: Category[];
+  logoUrl?: string;
+  siteName?: string;
+}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { totalCount } = useCart();
 
@@ -26,7 +35,7 @@ export function Header() {
           <Menu size={22} />
         </button>
 
-        <Logo />
+        <Logo logoUrl={logoUrl} siteName={siteName} />
 
         <nav className="hidden items-center gap-1 lg:flex">
           {mainNav.map((item) =>
@@ -41,20 +50,23 @@ export function Header() {
                 </button>
                 <div className="invisible absolute left-1/2 top-full z-20 w-[560px] -translate-x-1/2 pt-3 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100">
                   <div className="grid grid-cols-4 gap-3 rounded-2xl border border-border bg-card p-4 shadow-lg">
-                    {categories.map((cat) => (
-                      <Link
-                        key={cat.id}
-                        href={cat.href}
-                        className="flex flex-col items-center gap-2 rounded-xl p-2 text-center text-xs font-semibold text-charcoal hover:bg-cream"
-                      >
-                        <span
-                          className={`flex h-12 w-12 items-center justify-center rounded-full ${pastelBgClass[cat.bg]}`}
+                    {categories.map((cat) => {
+                      const Icon = categoryIcons[cat.id] ?? ImageIcon;
+                      return (
+                        <Link
+                          key={cat.id}
+                          href={cat.href}
+                          className="flex flex-col items-center gap-2 rounded-xl p-2 text-center text-xs font-semibold text-charcoal hover:bg-cream"
                         >
-                          <cat.icon size={20} className="text-charcoal/70" strokeWidth={1.75} />
-                        </span>
-                        {cat.name}
-                      </Link>
-                    ))}
+                          <span
+                            className={`flex h-12 w-12 items-center justify-center rounded-full ${pastelBgClass[cat.bg]}`}
+                          >
+                            <Icon size={20} className="text-charcoal/70" strokeWidth={1.75} />
+                          </span>
+                          {cat.name}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -109,7 +121,7 @@ export function Header() {
           />
           <div className="absolute inset-y-0 left-0 flex w-[82%] max-w-sm flex-col gap-1 overflow-y-auto bg-card p-5">
             <div className="mb-4 flex items-center justify-between">
-              <Logo />
+              <Logo logoUrl={logoUrl} siteName={siteName} />
               <button
                 type="button"
                 onClick={() => setMobileOpen(false)}

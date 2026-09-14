@@ -2,9 +2,11 @@ import { Heart, Quote } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { MediaPlaceholder } from "@/components/ui/MediaPlaceholder";
 import { StarRating } from "@/components/ui/StarRating";
-import { testimonials, testimonialsAreDemo } from "@/config/homepage";
+import type { Testimonial } from "@/types";
 
-export function Testimonials() {
+export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
+  if (testimonials.length === 0) return null;
+
   return (
     <section className="relative overflow-hidden py-14 lg:py-20">
       <Container>
@@ -13,11 +15,6 @@ export function Testimonials() {
             Loved by Parents, Trusted by Families
             <Heart size={18} className="fill-secondary text-secondary" />
           </h2>
-          {testimonialsAreDemo && (
-            <p className="mt-2 text-xs text-muted">
-              Demo content shown for preview — replace with verified customer reviews.
-            </p>
-          )}
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-3">

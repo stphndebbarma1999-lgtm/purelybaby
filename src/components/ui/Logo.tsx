@@ -2,15 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 
-export function Logo({ className = "" }: { className?: string }) {
-  const { logo } = siteConfig;
-
-  if (logo.imageUrl) {
+export function Logo({
+  className = "",
+  logoUrl = "",
+  siteName = siteConfig.name,
+}: {
+  className?: string;
+  logoUrl?: string;
+  siteName?: string;
+}) {
+  if (logoUrl) {
     return (
       <Link href="/" className={`inline-flex items-center ${className}`}>
         <Image
-          src={logo.imageUrl}
-          alt={siteConfig.name}
+          src={logoUrl}
+          alt={siteName}
           width={160}
           height={40}
           className="h-9 w-auto"
@@ -20,7 +26,7 @@ export function Logo({ className = "" }: { className?: string }) {
     );
   }
 
-  // Temporary text wordmark placeholder until a final logo asset is provided.
+  // Temporary text wordmark placeholder until a logo image is uploaded.
   return (
     <Link
       href="/"

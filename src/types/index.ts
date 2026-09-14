@@ -18,7 +18,12 @@ export interface Category {
   href: string;
   imageUrl: string;
   bg: PastelBg;
-  icon: LucideIcon;
+}
+
+export interface ProductColor {
+  name: string;
+  hex: string;
+  imageUrl?: string;
 }
 
 export interface Product {
@@ -27,6 +32,8 @@ export interface Product {
   title: string;
   description: string;
   imageUrl: string;
+  images: string[];
+  colors: ProductColor[];
   price: number;
   originalPrice?: number;
   rating: number;
@@ -65,4 +72,14 @@ export interface HeroConfig {
   primaryButton: HeroButton;
   secondaryButton: HeroButton;
   imageUrl: string;
+}
+
+export interface Banner {
+  id: string;
+  title: string;
+  subtitle: string;
+  ctaLabel: string;
+  href: string;
+  desktopImageUrl: string;
+  mobileImageUrl: string;
 }

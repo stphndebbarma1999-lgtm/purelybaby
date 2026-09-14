@@ -2,16 +2,14 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { ProductGrid } from "@/components/home/ProductGrid";
-import { allProducts } from "@/config/products";
+import { getDeals } from "@/lib/data/products";
 
 export const metadata: Metadata = {
   title: "Deals",
 };
 
-export default function DealsPage() {
-  const deals = allProducts.filter(
-    (product) => product.originalPrice && product.originalPrice > product.price
-  );
+export default async function DealsPage() {
+  const deals = await getDeals();
 
   return (
     <>

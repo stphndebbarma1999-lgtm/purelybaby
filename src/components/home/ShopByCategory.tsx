@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ImageIcon } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { MediaPlaceholder } from "@/components/ui/MediaPlaceholder";
-import { categories } from "@/config/homepage";
+import { categoryIcons } from "@/lib/category-icons";
+import type { Category } from "@/types";
 
-export function ShopByCategory() {
+export function ShopByCategory({ categories }: { categories: Category[] }) {
   return (
     <section id="categories" className="py-14 lg:py-20">
       <Container>
@@ -22,7 +23,7 @@ export function ShopByCategory() {
               <MediaPlaceholder
                 src={category.imageUrl}
                 alt={category.name}
-                icon={category.icon}
+                icon={categoryIcons[category.id] ?? ImageIcon}
                 tint={category.bg}
                 fill={false}
                 className="aspect-square w-full rounded-xl"

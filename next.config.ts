@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "*.sirv.com" },
       { protocol: "https", hostname: "sirv.com" },
+      // Supabase Storage — product/category/banner/logo uploads.
+      { protocol: "https", hostname: "*.supabase.co" },
     ],
   },
 };

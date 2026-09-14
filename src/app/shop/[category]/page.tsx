@@ -3,10 +3,11 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { ProductGrid } from "@/components/home/ProductGrid";
-import { getProductsByCategory } from "@/config/products";
-import { categories } from "@/config/homepage";
+import { getProductsByCategory } from "@/lib/data/products";
+import { getCategories, getCategoryBySlug } from "@/lib/data/categories";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const categories = await getCategories();
   return categories.map((category) => ({ category: category.id }));
 }
 
@@ -16,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ category: string }>;
 }): Promise<Metadata> {
   const { category: slug } = await params;
-  const category = categories.find((c) => c.id === slug);
+  const category = await getCategoryBySlug(slug);
   return { title: category ? category.name : "Category" };
 }
 
@@ -26,10 +27,10 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category: slug } = await params;
-  const category = categories.find((c) => c.id === slug);
+  const category = await getCategoryBySlug(slug);
   if (!category) notFound();
 
-  const products = getProductsByCategory(category.id);
+  const products = await getProductsByCategory(category.id);
 
   return (
     <>

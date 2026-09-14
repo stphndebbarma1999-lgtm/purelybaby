@@ -1,24 +1,16 @@
 import type { LinkGroup, NavLink } from "@/types";
 
 /**
- * Site-wide configuration. Intended to eventually be editable from an
- * admin panel without touching code — every field here is a candidate
- * for a future CMS/admin form.
+ * Site-wide configuration that stays code-owned: domain metadata and
+ * fallback text used before the admin-managed `site` content block (see
+ * src/lib/data/content.ts) has real values. Logo, announcement bar,
+ * hero and newsletter copy are database-managed, not here.
  */
 export const siteConfig = {
   name: "PURELYBABY",
   domain: "purelybaby.shop",
   description:
     "Thoughtfully selected baby essentials for feeding, play, sleep, travel and everyday care.",
-  logo: {
-    // Centralized so a Sirv-hosted logo URL can be dropped in later.
-    imageUrl: "",
-    text: "PurelyBaby",
-  },
-  announcementBar: {
-    enabled: true,
-    message: "Free Shipping on Orders Over ₹999  |  10% Off Your First Order — Code: PURELY10",
-  },
 };
 
 export const mainNav: NavLink[] = [

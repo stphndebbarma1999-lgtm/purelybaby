@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Check, Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import { MediaPlaceholder } from "@/components/ui/MediaPlaceholder";
 import { StarRating } from "@/components/ui/StarRating";
@@ -16,6 +16,13 @@ export function ProductDetail({ product }: { product: Product }) {
   const [justAdded, setJustAdded] = useState(false);
   const wishlisted = isWishlisted(product.id);
 
+  const gallery = useMemo(
+    () => [product.imageUrl, ...product.images].filter(Boolean),
+    [product.imageUrl, product.images]
+  );
+  const [activeImage, setActiveImage] = useState(0);
+  const [selectedColor, setSelectedColor] = useState(0);
+
   const discountPct =
     product.originalPrice && product.originalPrice > product.price
       ? Math.round(100 - (product.price / product.originalPrice) * 100)
@@ -27,15 +34,42 @@ export function ProductDetail({ product }: { product: Product }) {
     window.setTimeout(() => setJustAdded(false), 1500);
   }
 
+  const displayImage =
+    product.colors[selectedColor]?.imageUrl || gallery[activeImage] || product.imageUrl;
+
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-      <MediaPlaceholder
-        src={product.imageUrl}
-        alt={product.title}
-        tint="mint"
-        fill={false}
-        className="aspect-square w-full rounded-2xl border border-border"
-      />
+      <div>
+        <MediaPlaceholder
+          src={displayImage}
+          alt={product.title}
+          tint="mint"
+          fill={false}
+          className="aspect-square w-full rounded-2xl border border-border"
+        />
+        {gallery.length > 1 && (
+          <div className="mt-3 flex gap-2">
+            {gallery.map((src, i) => (
+              <button
+                key={src + i}
+                type="button"
+                onClick={() => setActiveImage(i)}
+                className={`overflow-hidden rounded-lg border-2 transition-colors ${
+                  i === activeImage ? "border-primary" : "border-transparent"
+                }`}
+              >
+                <MediaPlaceholder
+                  src={src}
+                  alt={`${product.title} ${i + 1}`}
+                  tint="mint"
+                  fill={false}
+                  className="h-16 w-16"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       <div>
         {product.badge && (
@@ -65,6 +99,30 @@ export function ProductDetail({ product }: { product: Product }) {
         </div>
 
         <p className="mt-5 max-w-md text-sm leading-relaxed text-muted">{product.description}</p>
+
+        {product.colors.length > 0 && (
+          <div className="mt-5">
+            <p className="mb-2 text-xs font-bold text-charcoal">
+              Color: <span className="font-normal text-muted">{product.colors[selectedColor]?.name}</span>
+            </p>
+            <div className="flex items-center gap-2">
+              {product.colors.map((color, i) => (
+                <button
+                  key={color.name}
+                  type="button"
+                  onClick={() => setSelectedColor(i)}
+                  aria-label={color.name}
+                  style={{ backgroundColor: color.hex }}
+                  className={`h-8 w-8 rounded-full border-2 transition-transform ${
+                    i === selectedColor
+                      ? "scale-110 border-primary"
+                      : "border-border hover:scale-105"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-6 flex items-center gap-4">
           <div className="flex items-center rounded-full border border-border">

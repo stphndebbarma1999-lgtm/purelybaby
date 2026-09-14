@@ -3,14 +3,16 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { ProductGrid } from "@/components/home/ProductGrid";
-import { allProducts } from "@/config/products";
-import { categories } from "@/config/homepage";
+import { getAllProducts } from "@/lib/data/products";
+import { getCategories } from "@/lib/data/categories";
 
 export const metadata: Metadata = {
   title: "Shop All Products",
 };
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const [products, categories] = await Promise.all([getAllProducts(), getCategories()]);
+
   return (
     <>
       <PageHero
@@ -29,7 +31,7 @@ export default function ShopPage() {
             </Link>
           ))}
         </div>
-        <ProductGrid products={allProducts} />
+        <ProductGrid products={products} />
       </Container>
     </>
   );
