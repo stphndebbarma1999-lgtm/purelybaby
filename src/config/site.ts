@@ -24,7 +24,7 @@ export const siteConfig = {
 export const mainNav: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
-  { label: "Categories", href: "#categories" },
+  { label: "Categories", href: "/#categories" },
   { label: "New Arrivals", href: "/new-arrivals" },
   { label: "Deals", href: "/deals" },
 ];

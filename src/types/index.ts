@@ -25,12 +25,16 @@ export interface Product {
   id: string;
   slug: string;
   title: string;
+  description: string;
   imageUrl: string;
   price: number;
   originalPrice?: number;
   rating: number;
   reviewCount: number;
   badge?: string;
+  categorySlug: string;
+  isBestSeller?: boolean;
+  isNewArrival?: boolean;
 }
 
 export interface Testimonial {

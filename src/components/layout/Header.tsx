@@ -8,11 +8,11 @@ import { Logo } from "@/components/ui/Logo";
 import { mainNav } from "@/config/site";
 import { categories } from "@/config/homepage";
 import { pastelBgClass } from "@/lib/pastel";
-
-const CART_COUNT = 2;
+import { useCart } from "@/context/CartContext";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { totalCount } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card">
@@ -91,9 +91,9 @@ export function Header() {
             className="relative rounded-full p-2 text-charcoal transition-colors hover:bg-cream hover:text-primary"
           >
             <ShoppingCart size={20} />
-            {CART_COUNT > 0 && (
+            {totalCount > 0 && (
               <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-white">
-                {CART_COUNT}
+                {totalCount}
               </span>
             )}
           </Link>
@@ -142,7 +142,7 @@ export function Header() {
               onClick={() => setMobileOpen(false)}
               className="flex items-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold text-charcoal hover:bg-cream"
             >
-              <ShoppingCart size={18} /> Cart ({CART_COUNT})
+              <ShoppingCart size={18} /> Cart ({totalCount})
             </Link>
           </div>
         </div>
